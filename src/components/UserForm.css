@@ -1,0 +1,51 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+input {
+    width: 25vw;
+    min-width: 250px;
+    padding: 10px;
+    font-size: large;
+    border-radius: 5px;
+}
+
+.label {
+    color: rgb(202, 255, 132);
+}
+
+@keyframes submitButtonAnimation {
+    0% {color: white;}
+    25% {color:rgb(202, 255, 132); transform: translateX(5px);}
+    75% {color:rgb(202, 255, 132); transform: translateX(0px);}
+    100% {color: white;}
+}
+
+@keyframes onSubmitAnimation {
+    0% {color: white;}
+    20% {color:rgb(202, 255, 132); transform: translateX(50px);}
+    40% {color:rgba(202, 255, 132, 0.75); transform: translateX(100px);}
+    60% {color:rgba(202, 255, 132, 0.5); transform: translateX(150px);}
+    80% {color:rgba(202, 255, 132, 0.25); transform: translateX(200px);}
+    90% {visibility: hidden; color: #1a1a1a;}
+    100% {visibility: hidden; color: #1a1a1a;}
+}
+
+.submitButton {
+    animation-name: submitButtonAnimation;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+    user-select: none;
+}
+.submitButton:active {
+    animation-name: onSubmitAnimation;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+}

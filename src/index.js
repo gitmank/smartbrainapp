@@ -4,12 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-fetch('http://localhost:6969/print', {
-  method: 'post',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify({"user":"Manomay"})
-})
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
