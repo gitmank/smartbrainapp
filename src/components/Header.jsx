@@ -1,6 +1,6 @@
 import '../components/Header.css'
 
-function Header() {
+const Header = () => {
     return(
         <header>Smartbrain ∞</header>
     );

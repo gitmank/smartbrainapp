@@ -1,0 +1,62 @@
+.searchBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-self: center;
+    align-self: center;
+    flex-direction: row;
+    font-size: 2em;
+    margin-top: 25px;
+    padding: 2%;
+    gap: 30px;
+}
+
+.imageSearchField {
+    border: 2px black solid;
+    padding: 2%;
+    font-size: large;
+    border-radius: 10px;
+    min-width: 50vw;
+}
+
+.submitImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    width: max-content;
+    height: 5vh;
+    padding: 3%;
+    background-color: rgb(202, 255, 132);
+    border-radius: 50px;
+}
+
+@media screen and (max-width: 800px) {
+    .searchBar {
+        flex-direction: column;
+        font-size: 2em;
+        margin-top: 25px;
+        padding: 2%;
+        gap: 30px;
+    }
+    .imageSearchField {
+        font-size: large;
+        padding: 5%;
+        width: 80vw;
+    }
+    .submitImage {
+        width: 25vw;
+        height: 10vh;
+        padding: 3%;
+        background-color: rgb(202, 255, 132);
+        border-radius: 50px;
+    }
+}
+
+.imageDisplay {
+    display: flex;
+    align-self: center;
+    max-width: 75vw;
+    max-height: 50vh;
+    margin: 50px;
+}

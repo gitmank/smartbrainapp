@@ -4,24 +4,46 @@
     width: 100%;
     align-items: center;
     margin-top: 50px;
-    gap: 20px;
+    gap: 10px;
 }
 
-input {
-    width: 25vw;
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+#passwordField, #usernameField {
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    width: 35vw;
     min-width: 250px;
-    padding: 10px;
-    font-size: large;
-    border-radius: 5px;
+    padding: 5px;
+    font-size: 24px;
+    background: transparent;
+    border-bottom: white 1px solid;
+}
+
+#passwordField:focus, #usernameField:focus {
+    border-color: rgb(202, 255, 132);
 }
 
 .label {
     color: rgb(202, 255, 132);
+    margin-bottom: 5%;
+}
+
+.errorMessage {
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 80vw;
+    font-size: 14px;
+    color: crimson;
 }
 
 @keyframes submitButtonAnimation {
     0% {color: white;}
-    25% {color:rgb(202, 255, 132); transform: translateX(5px);}
+    25% {color:rgb(202, 255, 132); transform: translateX(10px);}
     75% {color:rgb(202, 255, 132); transform: translateX(0px);}
     100% {color: white;}
 }
@@ -38,7 +60,7 @@ input {
 
 .submitButton {
     animation-name: submitButtonAnimation;
-    animation-duration: 4s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: ease;
     user-select: none;

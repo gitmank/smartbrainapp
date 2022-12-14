@@ -1,18 +1,18 @@
 import './App.css';
-import React from 'react';
-import Header from './components/Header'
-import Navbar from './components/Navbar'
-import UserForm from './components/UserForm'
+import { Component } from 'react';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
+import UserForm from './components/UserForm';
+import Home from './components/Home';
 
-class App extends React.Component {
+class App extends Component {
   constructor() {
     super()
     this.state = {
-      isUsersignedIn: false,
+      isUserAuthenticated: false,
       page: 'login',
       authenticatedUser: '',
-      usernameField: '',
-      passwordField: '',
+      count: 0,
     }
   }
 
@@ -24,54 +24,71 @@ class App extends React.Component {
     this.setState({ page: 'register' });
   }
 
-  usernameFieldChange = (event) => {
-    this.setState({ usernameField: event.target.value });
-  }
-
-  passwordFieldChange = (event) => {
-    this.setState({ passwordField: event.target.value });
-  }
-
-  authenticateUser = () => {
-    let { usernameField, passwordField } = this.state;
-    let userObject = {
-      username: usernameField,
-      password: passwordField,
-    }
-    if ((usernameField !== '') && (passwordField !== '')) {
-      if(this.state.page === 'register') {
-        fetch('http://192.168.0.101:6969/addUser', {
-          method: 'post',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(userObject),
-        })
-      }
-      fetch('http://192.168.0.101:6969/authenticate', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(userObject),
-      })
-      .then(response => response.json())
-      .then(data => this.setState({ 
-        authenticatedUser: data.username,
-        isUsersignedIn: true, 
-        page: 'home', 
-        usernameField: '', 
-        passwordField: '' 
-      }))
-    }
-  }
-
   onClickLogout = () => {
-    this.setState({ authenticatedUser: '', isUsersignedIn: false, page: 'login', usernameField: '', passwordField: '' })
+    this.setState({ 
+      authenticatedUser: '', 
+      isUserAuthenticated: false, 
+      page: 'login', 
+    })
+  }
+
+  authenticateUser = async (givenUsername, givenPassword) => {
+    let returnedUser = await fetch('http://192.168.0.101:6969/authenticate', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ username: givenUsername, password: givenPassword})
+    })
+    .then(response => response.json())
+    .then(data => { return data })
+    let authSuccess = returnedUser.isAuthenticated;
+    if(authSuccess) {
+      this.updateCurrentUser(returnedUser);
+      this.setState({ page: 'home' });
+    }
+    return authSuccess;
+  }
+
+  updateCurrentUser = (returnedUser) => {
+    this.setState({ 
+      authenticatedUser: returnedUser.username, 
+      count: returnedUser.count, 
+      isUserAuthenticated: returnedUser.isAuthenticated,
+    });
+  }
+
+  createUser = async (givenUsername, givenPassword) => {
+    let regSuccess = await fetch('http://192.168.0.101:6969/addUser', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ username: givenUsername, password: givenPassword})
+    })
+    .then(response => response.json())
+    .then(data => { return data })
+    return regSuccess;
+  }
+
+  updateCount = () => {
+    // update count route not ready in API
   }
 
   render() {
     return (
       <div className="App">
         <Header />
-        <Navbar isUsersignedIn={this.state.isUsersignedIn} username={this.state.authenticatedUser} onClickLogin={this.onClickLogin} onClickRegister={this.onClickRegister} onClickLogout={this.onClickLogout} page={this.state.page}/>
-        <UserForm page={this.state.page} usernameFieldChange={this.usernameFieldChange} passwordFieldChange={this.passwordFieldChange} onSubmit={this.authenticateUser}/>
+        <Navbar 
+          isUserAuthenticated={this.state.isUserAuthenticated} 
+          username={this.state.authenticatedUser} 
+          onClickLogin={this.onClickLogin} 
+          onClickRegister={this.onClickRegister} 
+          onClickLogout={this.onClickLogout} 
+          page={this.state.page}
+        />
+        <UserForm 
+          page={this.state.page} 
+          authenticateUser={this.authenticateUser}
+          createUser={this.createUser}
+        />
+        <Home page={this.state.page} updateCount={this.updateCount} />
       </div>
     );
   }
