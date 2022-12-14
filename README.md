@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Frontend Progress
-    + header component ready
-
-# How you can contribute
-    + replace favicon.ico file with our project logo
+    + login and signup page ready
+    + image preview and submission page ready
+    - color cards pending
+    - result display page pending
