@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 # Frontend Progress
@@ -7,3 +5,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     + image preview and submission page ready
     - color cards pending
     - result display page pending
+
+#### To view just run  
+``` npm install ```  
+#### and then  
+``` npm start ```
