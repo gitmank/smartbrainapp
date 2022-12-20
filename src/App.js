@@ -10,7 +10,7 @@ class App extends Component {
     super()
     this.state = {
       isUserAuthenticated: false,
-      page: 'login',
+      page: 'register',
       authenticatedUser: '',
       count: 0,
     }
@@ -30,6 +30,10 @@ class App extends Component {
       isUserAuthenticated: false, 
       page: 'login', 
     })
+  }
+
+  onHomeClick = () => {
+    this.setState({ page: 'home' });
   }
 
   authenticateUser = async (givenUsername, givenPassword) => {
@@ -67,8 +71,34 @@ class App extends Component {
     return regSuccess;
   }
 
-  updateCount = () => {
-    // update count route not ready in API
+  updateCount = async () => {
+    let success = await fetch('http://192.168.0.101:6969/updateCount', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: this.state.authenticatedUser, count: this.state.count })
+    })
+    .then(response => response.json())
+    .then(result => { return result })
+    .catch(error => { return false })
+    if(success) this.setState({ count: this.state.count-1 })
+  }
+
+  getColors = async (imageURL) => {
+    const colors = await fetch('http://192.168.0.101:6969/analyseImage', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({link: imageURL})
+    })
+    .then(response => response.json())
+    .then(data => { return data.colors })
+    .catch(error => { return false});
+    // update page
+    if(colors !== undefined) {
+      this.setState({ page: 'results' });
+      this.updateCount();
+      return colors;
+    }
+    else return false;
   }
 
   render() {
@@ -80,7 +110,8 @@ class App extends Component {
           username={this.state.authenticatedUser} 
           onClickLogin={this.onClickLogin} 
           onClickRegister={this.onClickRegister} 
-          onClickLogout={this.onClickLogout} 
+          onClickLogout={this.onClickLogout}
+          onHomeClick={this.onHomeClick} 
           page={this.state.page}
         />
         <UserForm 
@@ -88,7 +119,11 @@ class App extends Component {
           authenticateUser={this.authenticateUser}
           createUser={this.createUser}
         />
-        <Home page={this.state.page} updateCount={this.updateCount} />
+        <Home 
+          page={this.state.page} 
+          getColors={this.getColors} 
+          count={this.state.count}
+        />
       </div>
     );
   }

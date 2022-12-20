@@ -3,7 +3,7 @@ import './Home.css'
 const ImagePane = ({ imageLink }) => {
     return(
         <>
-            <img src={imageLink} className="imageDisplay" alt='enter an address to view' />
+            <img src={imageLink} className="imageDisplay" alt='enter an address to preview' />
         </>
     )
 }

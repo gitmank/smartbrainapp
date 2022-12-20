@@ -1,11 +1,12 @@
 import '../components/Navbar.css'
 
-const Navbar = ({isUserAuthenticated, username, onClickLogin, onClickRegister, onClickLogout, page}) => {
+const Navbar = ({isUserAuthenticated, username, onClickLogin, onClickRegister, onClickLogout, page, onHomeClick}) => {
     if(isUserAuthenticated) {
         return(
             <div className="navbar">
                 <strong>Hello {username}!</strong>
                 <div className='actionbar'>
+                    <strong className='clickable' onClick={onHomeClick}>Home</strong>
                     <strong className='clickable' onClick={onClickLogout}>Logout</strong>
                 </div>
             </div>
